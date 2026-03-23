@@ -5,23 +5,24 @@
   (set! double_count (+ double_count 1))
   (+ a a))
 
+(define (even? n)
+  (= (remainder n 2) 0))
+
+(define (halve-iter acc n)
+  (cond ((= n 0) acc)
+        ((> n 0) (halve-iter (+ acc 1) (- n 2)))
+        (else    (halve-iter (- acc 1) (+ n 2)))))
+
 (define (halve a)
   (set! halve_count (+ halve_count 1))
   (halve-iter 0 a))
 
-(define (even? n)
-  (= (remainder n 2) 0))
-
-(define (halve-iter bottom n)
-  (cond ((= bottom n) n)
-        ((= bottom (- n 1)) (+ bottom 0.5))
-        (else (halve-iter (+ bottom 1) (- n 1)))))
-
 (define (mult m n)
   (set! count (+ count 1))
-  (cond ((= n 1) m)
+  (cond ((= n 0) 0)
         ((even? n) (mult (double m) (halve n)))
-        (else (+ m (mult m (- n 1))))))
+        ((> n 0)   (+ m (mult m (- n 1))))
+        (else      (- (mult m (+ n 1)) m))))
 
 (newline)
 (set! count 0)
